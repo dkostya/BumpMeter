@@ -154,4 +154,5 @@ raw_ws.add_chart(raw_chart, "A10")
 
 raw_wb.save(file_raw_name)
 
-print('done')
+if True:
+    print('done')
