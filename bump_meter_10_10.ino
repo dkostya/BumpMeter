@@ -28,6 +28,25 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+*-----------ACCEL SELECT-------------------------------------------------------------------------------------------------------------------------
+ *
+ *   WE CAN SELECT THE RANGE OF G TO +-2G, +-4G, +-8G AND +-16G USING THE 1C REGISTER AND ALTERING THE ACCEL_CONFIG REGISTER
+ *   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_2); //Setting the accel to +/- 2g
+ *   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_4); //Setting the accel to +/- 4g
+ *   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_8); //Setting the accel to +/- 8g
+ *   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16); //Setting the accel to +/- 16g
+ *
+ *
+ *   SO THE CALCULATION WILL BE
+ *   G_FORCE_SEL= FS/G_SEL
+ *
+ *   EX: FOR +-4g
+ *
+ *   G_FORCE_SEL = 32768/4 = 8192
+ *
+ *   G-FORCE = accelX/G_FORCE_SEL;
+ *
 ===============================================
 */
 
@@ -48,7 +67,7 @@ MPU6050 accelgyro;
 
 int16_t ax, ay, az;
 unsigned long time;
-int sensorValues[100];
+
 
 #define OUTPUT_READABLE_ACCELGYRO
 
@@ -69,26 +88,19 @@ void setup() {
     // initialize device
     //Serial.println("Initializing I2C devices...");
     accelgyro.initialize();
-    accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_12); //Set accel range
-
-    
-
+    accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16); //Set accel range
 }
 
 
 
 void loop() {
-    
-    //time = micros();
 
     int i;
     for(i=0; i<10; i=i+1){
       accelgyro.getAcceleration(&ax, &ay, &az);
-      Serial.print(ax);
+      Serial.print(ax*-1);
+      Serial.print(',');
       };
-    
-    
+
     Serial.println();
-
-
 }
