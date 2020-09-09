@@ -90,7 +90,8 @@ accel_list.pop(0)
 max_force = accel_list.index(max(accel_list))
 
 
-# Проверка максимума. Бывают непонятные выбросы
+# Проверка максимума. Бывают непонятные выбросы.
+# ЕСли находим аномалию, удаляем и выполняем поиск заново
 if (accel_list[max_force] // accel_list[max_force-2]) > 5:
     del accel_list[max_force-3:max_force+3]
     max_force = accel_list.index(max(accel_list))
